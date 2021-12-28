@@ -9,7 +9,7 @@ namespace NetRunner
         public int maxInput;
         public int maxOutput;
         public int[] layers;
-        public int[] totalNeurons;
+        public List<int> totalNeurons= new List<int>();
         public Vector<double> inputs;
         public Vector<double> outputs;
         public List<Matrix<double>> weights = new List<Matrix<double>>();
@@ -35,13 +35,13 @@ namespace NetRunner
             this.squish = squish;
             this.inputs = Vector<double>.Build.Dense(maxInput);
             this.outputs = Vector<double>.Build.Dense(maxOutput);
-            totalNeurons.Append(maxInput);
-            for (int i = 0; i < layers.Length; i++)
+            totalNeurons.Add(maxInput);
+            for (int i = 0; i < this.layers.Length; i++)
             {
-                totalNeurons.Append(this.layers[i]);
+                totalNeurons.Add(this.layers[i]);
             }
-            totalNeurons.Append(maxOutput);
-            for (int i = 0; i < totalNeurons.Length - 1; i++)
+            totalNeurons.Add(maxOutput);
+            for (int i = 0; i < totalNeurons.Count - 1; i++)
             {
                 Matrix<double> tempw = 10 * Matrix<double>.Build.Random(totalNeurons[i + 1], totalNeurons[i]) - 5;
                 weights.Add(tempw);
@@ -57,7 +57,7 @@ namespace NetRunner
         {
             weights = new List<Matrix<double>>();
             biases = new List<Vector<double>>();
-            for (int i = 0; i < totalNeurons.Length - 1; i++)
+            for (int i = 0; i < totalNeurons.Count - 1; i++)
             {
                 Matrix<double> tempw = 10 * Matrix<double>.Build.Random(totalNeurons[i + 1], totalNeurons[i]) - 5;
                 weights.Add(tempw);
@@ -79,16 +79,17 @@ namespace NetRunner
             layersquish = new List<Vector<double>>();
             Vector<double> current = inputs;
             layerout.Add(current);
-            layersquish.Add(current);
+            layersquish.Add(inputs);
             for(int i = 0; i < weights.Count; i++)
             {
-                current = weights[i]*current+biases[i];
-                layerout.Add(current);
+                current = weights[i]* current + biases[i];
+                Vector<double> currentsquish = Vector<double>.Build.DenseOfVector(current);
+                layerout.Add(current); 
                 for (int j = 0; j < current.Count; j++)
                 {
-                    current[j] = sigmoid(current[0]);
+                    currentsquish[j] = sigmoid(currentsquish[j]);
                 }
-                layersquish.Add(current);
+                layersquish.Add(currentsquish);
             }
             return current;
         }
