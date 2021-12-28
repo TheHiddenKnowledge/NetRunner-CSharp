@@ -2,11 +2,17 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net48</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\NetRunner\NetRunner.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="MathNet.Numerics">
+      <HintPath>..\..\TrussSolver\TrussSolver\bin\Debug\netcoreapp3.1\MathNet.Numerics.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
