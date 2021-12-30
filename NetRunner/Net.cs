@@ -113,7 +113,7 @@ namespace NetRunner
             // Using matrix multiplication and addition to get each layers output 
             for (int i = 0; i < weights.Count; i++)
             {
-                current = (weights[i] * current) + biases[i];
+                current = (weights[i] * currentsquish) + biases[i];
                 currentsquish = Vector<double>.Build.DenseOfVector(current);
                 layerout.Add(current);
                 for (int j = 0; j < current.Count; j++)
