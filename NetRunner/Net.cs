@@ -254,15 +254,14 @@ namespace NetRunner
                 {
                     avg_expected += Math.Pow(layersquish[weights.Count][j] - expectedset[i][j], 2);
                 }
-                avg_expected /= expectedset[i].Count;
                 avg_error += avg_expected;
             }
             avg_error /= expectedset.Count;
             // Descending the gradient using the momentum theorem for neural nets 
             for (int i = 0; i < weights.Count; i++)
             {
-                weights[i] -= (beta * prevgradientw[i] + alpha * avg_gw[i]);
-                biases[i] -= (beta * prevgradientb[i] + alpha * avg_gb[i]);
+                weights[i] -= (beta * prevgradientw[i] + alpha * avg_gw[i] / expectedset.Count);
+                biases[i] -= (beta * prevgradientb[i] + alpha * avg_gb[i] / expectedset.Count);
             }
             prevgradientb = avg_gb;
             prevgradientw = avg_gw;

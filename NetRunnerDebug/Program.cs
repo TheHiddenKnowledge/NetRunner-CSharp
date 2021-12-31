@@ -17,7 +17,7 @@ namespace NetRunnerDebug
             int i = 0;
             Random random = new Random();
             // The net will continue to descend until the error is below the threshold value 
-            while (error > .001)
+            while (error > .00001)
             {
                 i += 1;
                 List<Vector<double>> expectedset = new List<Vector<double>>();
